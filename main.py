@@ -47,7 +47,7 @@ class MyWidget(QMainWindow):
 
     def create_my_answer(self):
         text = '<incorrect_solution>\n\n```\n' + self.incorrect_answer_te.toPlainText() + '\n```\n</incorrect_solution>\n\n' + \
-               '<explanation>\n\n```\n' + self.explanation_te.toPlainText() + '\n```\n</explanation>\n\n' + \
+               '<explanation>\n' + self.explanation_te.toPlainText() + '\n</explanation>\n\n' + \
                '<correct_solution>\n\n```\n' + self.correct_answer_te.toPlainText() + '\n```\n</correct_solution>\n\n'
         self.my_answer_te.clear()
         self.my_answer_te.appendPlainText(text)
