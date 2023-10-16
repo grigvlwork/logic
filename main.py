@@ -34,7 +34,7 @@ class MyWidget(QMainWindow):
         self.clear_answer.clicked.connect(self.clear)
         self.process_btn.clicked.connect(self.processing)
         self.correct_code = ''
-        self.run_incorrect_code = ''
+        self.incorrect_code = ''
         self.correct_code_model = QStandardItemModel()
         self.incorrect_code_model = QStandardItemModel()
 
@@ -42,8 +42,10 @@ class MyWidget(QMainWindow):
         self.teacher_answer_te.clear()
 
     def run_incorrect(self):
+
         code = self.incorrect_answer_te.toPlainText()
         self.incorrect_result.setText(run_text(remove_comments(code)))
+
 
     def run_correct(self):
         code = self.correct_answer_te.toPlainText()
@@ -62,9 +64,17 @@ class MyWidget(QMainWindow):
             code = t[t.find('<incorrect_solution>') + 20:t.find('</incorrect_solution>')]
             self.incorrect_answer_te.clear()
             code = code.replace('```', '').strip()
-            code = autopep8.fix_code(code)
-            self.incorrect_answer_te.appendPlainText(code)
-            self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(code)))
+            self.incorrect_code = autopep8.fix_code(code)
+            # self.incorrect_answer_te.appendPlainText(code)
+            self.incorrect_code_model.clear()
+            for row in self.incorrect_code.split('\n'):
+                it = QStandardItem(row)
+                self.code_model.appendRow(it)
+            self.incorrect_code_tv.setModel(self.incorrect_code_model)
+            self.code_table.horizontalHeader().setVisible(False)
+            self.code_table.resizeColumnToContents(0)
+            self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(self.incorrect_code)))
+
         if all(x in t for x in ['<explanation>', '</explanation>']):
             code = t[t.find('<explanation>') + 13:t.find('</explanation>')]
             self.explanation_te.clear()
