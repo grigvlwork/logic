@@ -6,7 +6,7 @@ import sys
 import re
 from PyQt5 import uic  # Импортируем uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-
+from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
 def run_text(text):
     with open('code.py', 'w') as c:
@@ -33,6 +33,10 @@ class MyWidget(QMainWindow):
         self.run_correct_btn.clicked.connect(self.run_correct)
         self.clear_answer.clicked.connect(self.clear)
         self.process_btn.clicked.connect(self.processing)
+        self.correct_code = ''
+        self.run_incorrect_code = ''
+        self.correct_code_model = QStandardItemModel()
+        self.incorrect_code_model = QStandardItemModel()
 
     def clear(self):
         self.teacher_answer_te.clear()
