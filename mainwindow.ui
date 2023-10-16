@@ -132,14 +132,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="incorrect_answer_te">
-          <property name="font">
-           <font>
-            <family>Consolas</family>
-            <pointsize>10</pointsize>
-           </font>
-          </property>
-         </widget>
+         <widget class="QTableView" name="incorrect_answer_tv"/>
         </item>
         <item>
          <widget class="QLabel" name="incorrect_result">
@@ -207,14 +200,7 @@
        </layout>
       </item>
       <item>
-       <widget class="QPlainTextEdit" name="correct_answer_te">
-        <property name="font">
-         <font>
-          <family>Consolas</family>
-          <pointsize>10</pointsize>
-         </font>
-        </property>
-       </widget>
+       <widget class="QTableView" name="correct_answer_tv"/>
       </item>
       <item>
        <widget class="QLabel" name="correct_result">
