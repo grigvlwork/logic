@@ -8,6 +8,7 @@ from PyQt5 import uic  # Импортируем uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
+
 def run_text(text):
     with open('code.py', 'w') as c:
         c.write(text)
@@ -39,6 +40,7 @@ class MyWidget(QMainWindow):
         self.incorrect_code = ''
         self.correct_code_model = QStandardItemModel()
         self.incorrect_code_model = QStandardItemModel()
+        self.teacher_comment = ''
 
     def clear(self):
         self.teacher_answer_te.clear()
@@ -48,7 +50,6 @@ class MyWidget(QMainWindow):
         code = self.incorrect_answer_te.toPlainText()
         self.incorrect_result.setText(run_text(remove_comments(code)))
 
-
     def run_correct(self):
         code = self.correct_answer_te.toPlainText()
         self.correct_result.setText(run_text(remove_comments(code)))
@@ -56,7 +57,8 @@ class MyWidget(QMainWindow):
     def create_my_answer(self):
         text = '<incorrect_solution>\n\n```\n' + self.incorrect_answer_te.toPlainText() + '\n```\n</incorrect_solution>\n\n' + \
                '<explanation>\n' + self.explanation_te.toPlainText() + '\n</explanation>\n\n' + \
-               '<correct_solution>\n\n```\n' + self.correct_answer_te.toPlainText() + '\n```\n</correct_solution>'
+               '<correct_solution>\n\n```\n' + self.correct_answer_te.toPlainText() + '\n```\n</correct_solution>\n\n' + \
+               '<comment>\n' + self.teacher_comment + '\n</comment>'
         self.incorrect_code = self.incorrect_answer_te.toPlainText().strip()
         self.correct_code = autopep8.fix_code(self.correct_answer_te.toPlainText().strip())
         self.my_answer_te.clear()
@@ -83,6 +85,9 @@ class MyWidget(QMainWindow):
             code = autopep8.fix_code(code)
             self.correct_answer_te.appendPlainText(code)
             self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
+        if all(x in t for x in ['<comment>', '</comment>']):
+            self.teacher_comment = t[t.find('<comment>') + 9:t.find('</comment>')]
+        self.create_my_answer()
 
     def incorrect_row_generator(self):
         if self.incorrect_answer_tw.currentIndex() == 1:
@@ -103,7 +108,6 @@ class MyWidget(QMainWindow):
             self.correct_answer_tv.setModel(self.correct_code_model)
             self.correct_answer_tv.horizontalHeader().setVisible(False)
             self.correct_answer_tv.resizeColumnToContents(0)
-
 
 
 if __name__ == '__main__':
