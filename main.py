@@ -14,7 +14,10 @@ def run_text(text):
         c.write(text)
     completed_process = subprocess.run(['python', 'code.py'], capture_output=True, text=True)
     if completed_process.returncode == 0:
-        return completed_process.stdout
+        if len(completed_process.stdout) > 15:
+            return completed_process.stdout[:15] + '..'
+        else:
+            return completed_process.stdout
     else:
         return completed_process.stderr
 
@@ -66,6 +69,7 @@ class MyWidget(QMainWindow):
 
     def processing(self):
         t = self.teacher_answer_te.toPlainText()
+        self.teacher_comment = ''
         if all(x in t for x in ['<incorrect_solution>', '</incorrect_solution>']):
             code = t[t.find('<incorrect_solution>') + 20:t.find('</incorrect_solution>')]
             self.incorrect_answer_te.clear()
