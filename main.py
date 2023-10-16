@@ -57,7 +57,7 @@ class MyWidget(QMainWindow):
         text = '<incorrect_solution>\n\n```\n' + self.incorrect_answer_te.toPlainText() + '\n```\n</incorrect_solution>\n\n' + \
                '<explanation>\n' + self.explanation_te.toPlainText() + '\n</explanation>\n\n' + \
                '<correct_solution>\n\n```\n' + self.correct_answer_te.toPlainText() + '\n```\n</correct_solution>'
-        self.incorrect_code = autopep8.fix_code(self.incorrect_answer_te.toPlainText().strip())
+        self.incorrect_code = self.incorrect_answer_te.toPlainText().strip()
         self.correct_code = autopep8.fix_code(self.correct_answer_te.toPlainText().strip())
         self.my_answer_te.clear()
         self.my_answer_te.appendPlainText(text)
@@ -68,7 +68,7 @@ class MyWidget(QMainWindow):
             code = t[t.find('<incorrect_solution>') + 20:t.find('</incorrect_solution>')]
             self.incorrect_answer_te.clear()
             code = code.replace('```', '').strip()
-            self.incorrect_code = autopep8.fix_code(code)
+            # self.incorrect_code = autopep8.fix_code(code)
             self.incorrect_answer_te.appendPlainText(code)
             self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(self.incorrect_code)))
         if all(x in t for x in ['<explanation>', '</explanation>']):
