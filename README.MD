@@ -2,7 +2,7 @@
 
 ## Продвинутый блокнот для супертренеров
 
-   ![screen1](images/p1.PNG)
+   ![screen1](images/p1.png)
 
 0. Возможности:
 
@@ -23,33 +23,33 @@ autopep8, формирование текста ответа с тегами.
    
 Копируем ссылку из Github
 
-   ![screen3](images/p2-1.PNG)
+   ![screen3](images/p2-1.png)
 
 Вставляем в окошко создания проекта и нажимаем "Clone"
 
-   ![screen4](images/p3.PNG)
+   ![screen4](images/p3.png)
 
 Обычно этого хватает, какое-то время понадобится чтобы закачались библиотеки и проиндексировались файлы.
 Иногда бывает что автоматически не получается,
 
-   ![screen5](images/p4.PNG)
+   ![screen5](images/p4.png)
 
 Тогда делаем так:
 
 Настраиваем интерпретатор Python.
 
-   ![screen7](images/p5-1.PNG)
+   ![screen7](images/p5-1.png)
 
-   ![screen8](images/p6.PNG)
+   ![screen8](images/p6.png)
 
 Лучше ставить виртуальное окружение (Virtual environment).
 Потом устанавливаем зависимости
    
-   ![screen9](images/p7.PNG)
+   ![screen9](images/p7.png)
 
 Жмём "Install"
 
-   ![screen10](images/p8.PNG)
+   ![screen10](images/p8.png)
 
 Дожидаемся окончания установки и индексации. Готово.
 
