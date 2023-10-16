@@ -142,7 +142,14 @@
            </attribute>
            <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
-             <widget class="QPlainTextEdit" name="incorrect_answer_te"/>
+             <widget class="QPlainTextEdit" name="incorrect_answer_te">
+              <property name="font">
+               <font>
+                <family>Consolas</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -152,7 +159,14 @@
            </attribute>
            <layout class="QHBoxLayout" name="horizontalLayout_5">
             <item>
-             <widget class="QTableView" name="incorrect_answer_tv"/>
+             <widget class="QTableView" name="incorrect_answer_tv">
+              <property name="font">
+               <font>
+                <family>Consolas</family>
+                <pointsize>10</pointsize>
+               </font>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -234,7 +248,14 @@
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
           <item>
-           <widget class="QPlainTextEdit" name="correct_answer_te"/>
+           <widget class="QPlainTextEdit" name="correct_answer_te">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -244,7 +265,14 @@
          </attribute>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <item>
-           <widget class="QTableView" name="correct_answer_tv"/>
+           <widget class="QTableView" name="correct_answer_tv">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>

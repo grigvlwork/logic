@@ -89,20 +89,20 @@ class MyWidget(QMainWindow):
             self.incorrect_code_model.clear()
             for row in self.incorrect_code.split('\n'):
                 it = QStandardItem(row)
-                self.code_model.appendRow(it)
-            self.incorrect_code_tv.setModel(self.incorrect_code_model)
-            self.incorrect_code_tv.horizontalHeader().setVisible(False)
-            self.incorrect_code_tv.resizeColumnToContents(0)
+                self.incorrect_code_model.appendRow(it)
+            self.incorrect_answer_tv.setModel(self.incorrect_code_model)
+            self.incorrect_answer_tv.horizontalHeader().setVisible(False)
+            self.incorrect_answer_tv.resizeColumnToContents(0)
 
     def correct_row_generator(self):
         if self.correct_answer_tw.currentIndex() == 1:
             self.correct_code_model.clear()
             for row in self.correct_code.split('\n'):
                 it = QStandardItem(row)
-                self.code_model.appendRow(it)
-            self.correct_code_tv.setModel(self.correct_code_model)
-            self.correct_code_tv.horizontalHeader().setVisible(False)
-            self.correct_code_tv.resizeColumnToContents(0)
+                self.correct_code_model.appendRow(it)
+            self.correct_answer_tv.setModel(self.correct_code_model)
+            self.correct_answer_tv.horizontalHeader().setVisible(False)
+            self.correct_answer_tv.resizeColumnToContents(0)
 
 
 
