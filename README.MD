@@ -19,7 +19,7 @@ autopep8, формирование текста ответа с тегами.
 
 В Pycharm всё достаточно просто: при создании проекта жмём кнопку "Get from VCS",
 
-   ![screen2](images/p2.PNG)
+   ![screen2](images/p2.png)
    
 Копируем ссылку из Github
 
