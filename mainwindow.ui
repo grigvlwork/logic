@@ -76,9 +76,9 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QLabel" name="label_2">
+         <widget class="QPushButton" name="copy_my_answer_btn">
           <property name="text">
-           <string>Мой ответ</string>
+           <string>Копировать мой ответ</string>
           </property>
          </widget>
         </item>

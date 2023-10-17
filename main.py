@@ -1,7 +1,9 @@
 import sys
 import traceback
 import subprocess
-import autopep8
+# import autopep8
+import pyperclip
+import black
 import sys
 import re
 from PyQt5 import uic  # Импортируем uic
@@ -39,6 +41,7 @@ class MyWidget(QMainWindow):
         self.process_btn.clicked.connect(self.processing)
         self.incorrect_answer_tw.currentChanged.connect(self.incorrect_row_generator)
         self.correct_answer_tw.currentChanged.connect(self.correct_row_generator)
+        self.copy_my_answer_btn.clicked.connect(self.copy_my_answer)
         self.correct_code = ''
         self.incorrect_code = ''
         self.correct_code_model = QStandardItemModel()
@@ -49,7 +52,6 @@ class MyWidget(QMainWindow):
         self.teacher_answer_te.clear()
 
     def run_incorrect(self):
-
         code = self.incorrect_answer_te.toPlainText()
         self.incorrect_result.setText(run_text(remove_comments(code)))
 
@@ -63,7 +65,13 @@ class MyWidget(QMainWindow):
                '<correct_solution>\n\n```\n' + self.correct_answer_te.toPlainText() + '\n```\n</correct_solution>\n\n' + \
                '<comment>\n' + self.teacher_comment + '\n</comment>'
         self.incorrect_code = self.incorrect_answer_te.toPlainText().strip()
-        self.correct_code = autopep8.fix_code(self.correct_answer_te.toPlainText().strip())
+        # self.correct_code = autopep8.fix_code(self.correct_answer_te.toPlainText().strip())
+        self.correct_code = black.format_str(self.correct_answer_te.toPlainText().strip(), mode=black.Mode(
+            target_versions={black.TargetVersion.PY310},
+            line_length=101,
+            string_normalization=False,
+            is_pyi=False,
+        ), )
         self.my_answer_te.clear()
         self.my_answer_te.appendPlainText(text)
 
@@ -81,16 +89,24 @@ class MyWidget(QMainWindow):
             code = t[t.find('<explanation>') + 13:t.find('</explanation>')]
             self.explanation_te.clear()
             code = code.strip()
+            # code = autopep8.fix_code(code)
             self.explanation_te.appendPlainText(code)
+            # self.result2_lb.setText(run_text(remove_comments(code)))
         if all(x in t for x in ['<correct_solution>', '</correct_solution>']):
             code = t[t.find('<correct_solution>') + 18:t.find('</correct_solution>')]
             self.correct_answer_te.clear()
             code = code.replace('```', '').strip()
-            code = autopep8.fix_code(code)
+            # code = autopep8.fix_code(code)
+            code = black.format_str(code, mode=black.Mode(
+                target_versions={black.TargetVersion.PY310},
+                line_length=101,
+                string_normalization=False,
+                is_pyi=False,
+            ), )
             self.correct_answer_te.appendPlainText(code)
             self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
         if all(x in t for x in ['<comment>', '</comment>']):
-            self.teacher_comment = t[t.find('<comment>') + 9:t.find('</comment>')]
+            self.teacher_comment = t[t.find('<comment>') + 9:t.find('</comment>')].strip()
         self.create_my_answer()
 
     def incorrect_row_generator(self):
@@ -112,6 +128,10 @@ class MyWidget(QMainWindow):
             self.correct_answer_tv.setModel(self.correct_code_model)
             self.correct_answer_tv.horizontalHeader().setVisible(False)
             self.correct_answer_tv.resizeColumnToContents(0)
+
+    def copy_my_answer(self):
+        pyperclip.copy(self.my_answer_te.toPlainText())
+
 
 
 if __name__ == '__main__':
