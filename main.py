@@ -16,8 +16,8 @@ def run_text(text):
         c.write(text)
     completed_process = subprocess.run(['python', 'code.py'], capture_output=True, text=True)
     if completed_process.returncode == 0:
-        if len(completed_process.stdout) > 15:
-            return completed_process.stdout[:15] + '..'
+        if len(completed_process.stdout) > 25:
+            return completed_process.stdout[:25] + '..'
         else:
             return completed_process.stdout
     else:
