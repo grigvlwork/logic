@@ -66,12 +66,15 @@ class MyWidget(QMainWindow):
                '<comment>\n' + self.teacher_comment + '\n</comment>'
         self.incorrect_code = self.incorrect_answer_te.toPlainText().strip()
         # self.correct_code = autopep8.fix_code(self.correct_answer_te.toPlainText().strip())
-        self.correct_code = black.format_str(self.correct_answer_te.toPlainText().strip(), mode=black.Mode(
-            target_versions={black.TargetVersion.PY310},
-            line_length=101,
-            string_normalization=False,
-            is_pyi=False,
-        ), )
+        try:
+            self.correct_code = black.format_str(self.correct_answer_te.toPlainText().strip(), mode=black.Mode(
+                target_versions={black.TargetVersion.PY310},
+                line_length=101,
+                string_normalization=False,
+                is_pyi=False,
+            ), )
+        except black.parsing.InvalidInput:
+            self.correct_code = self.correct_answer_te.toPlainText().strip()
         self.my_answer_te.clear()
         self.my_answer_te.appendPlainText(text)
 
@@ -97,12 +100,15 @@ class MyWidget(QMainWindow):
             self.correct_answer_te.clear()
             code = code.replace('```', '').strip()
             # code = autopep8.fix_code(code)
-            code = black.format_str(code, mode=black.Mode(
-                target_versions={black.TargetVersion.PY310},
-                line_length=101,
-                string_normalization=False,
-                is_pyi=False,
-            ), )
+            try:
+                code = black.format_str(code, mode=black.Mode(
+                    target_versions={black.TargetVersion.PY310},
+                    line_length=101,
+                    string_normalization=False,
+                    is_pyi=False,
+                ), )
+            except black.parsing.InvalidInput:
+                code = code.strip()
             self.correct_answer_te.appendPlainText(code)
             self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
         if all(x in t for x in ['<comment>', '</comment>']):
