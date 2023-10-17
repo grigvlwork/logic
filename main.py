@@ -21,7 +21,10 @@ def run_text(text):
         else:
             return completed_process.stdout
     else:
-        return completed_process.stderr
+        if len(completed_process.stderr) > 50:
+            return completed_process.stderr[:50] + '\n' + completed_process.stderr[50:]
+        else:
+            return completed_process.stderr
 
 
 def remove_comments(code):
