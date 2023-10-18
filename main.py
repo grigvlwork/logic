@@ -56,11 +56,11 @@ class MyWidget(QMainWindow):
 
     def run_incorrect(self):
         code = self.incorrect_answer_te.toPlainText()
-        self.incorrect_result.setText(run_text(remove_comments(code)))
+        self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(code)))
 
     def run_correct(self):
         code = self.correct_answer_te.toPlainText()
-        self.correct_result.setText(run_text(remove_comments(code)))
+        self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
 
     def create_my_answer(self):
         text = '<incorrect_solution>\n\n```\n' + self.incorrect_answer_te.toPlainText() + '\n```\n</incorrect_solution>\n\n' + \
