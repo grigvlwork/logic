@@ -76,8 +76,9 @@ class MyWidget(QMainWindow):
                 string_normalization=False,
                 is_pyi=False,
             ), )
-        except black.parsing.InvalidInput:
+        except Exception as err:
             self.correct_code = self.correct_answer_te.toPlainText().strip()
+            # print(f"Unexpected {err=}, {type(err)=}")
         self.my_answer_te.clear()
         self.my_answer_te.appendPlainText(text)
 
@@ -110,7 +111,7 @@ class MyWidget(QMainWindow):
                     string_normalization=False,
                     is_pyi=False,
                 ), )
-            except black.parsing.InvalidInput:
+            except Exception as err:
                 code = code.strip()
             self.correct_answer_te.appendPlainText(code)
             self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
