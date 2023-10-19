@@ -1,7 +1,6 @@
 import sys
 import traceback
 import subprocess
-# import autopep8
 import pyperclip
 import black
 import sys
@@ -45,6 +44,7 @@ class MyWidget(QMainWindow):
         self.incorrect_answer_tw.currentChanged.connect(self.incorrect_row_generator)
         self.correct_answer_tw.currentChanged.connect(self.correct_row_generator)
         self.copy_my_answer_btn.clicked.connect(self.copy_my_answer)
+        self.pep8_btn.clicked.connect(self.pep8_correct)
         self.correct_code = ''
         self.incorrect_code = ''
         self.correct_code_model = QStandardItemModel()
@@ -68,17 +68,6 @@ class MyWidget(QMainWindow):
                '<correct_solution>\n\n```\n' + self.correct_answer_te.toPlainText() + '\n```\n</correct_solution>\n\n' + \
                '<comment>\n' + self.teacher_comment + '\n</comment>'
         self.incorrect_code = self.incorrect_answer_te.toPlainText().strip()
-        # self.correct_code = autopep8.fix_code(self.correct_answer_te.toPlainText().strip())
-        try:
-            self.correct_code = black.format_str(self.correct_answer_te.toPlainText().strip(), mode=black.Mode(
-                target_versions={black.TargetVersion.PY310},
-                line_length=101,
-                string_normalization=False,
-                is_pyi=False,
-            ), )
-        except Exception as err:
-            self.correct_code = self.correct_answer_te.toPlainText().strip()
-            # print(f"Unexpected {err=}, {type(err)=}")
         self.my_answer_te.clear()
         self.my_answer_te.appendPlainText(text)
 
@@ -89,21 +78,17 @@ class MyWidget(QMainWindow):
             code = t[t.find('<incorrect_solution>') + 20:t.find('</incorrect_solution>')]
             self.incorrect_answer_te.clear()
             code = code.replace('```', '').strip()
-            # self.incorrect_code = autopep8.fix_code(code)
             self.incorrect_answer_te.appendPlainText(code)
             self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(self.incorrect_code)))
         if all(x in t for x in ['<explanation>', '</explanation>']):
             code = t[t.find('<explanation>') + 13:t.find('</explanation>')]
             self.explanation_te.clear()
             code = code.strip()
-            # code = autopep8.fix_code(code)
             self.explanation_te.appendPlainText(code)
-            # self.result2_lb.setText(run_text(remove_comments(code)))
         if all(x in t for x in ['<correct_solution>', '</correct_solution>']):
             code = t[t.find('<correct_solution>') + 18:t.find('</correct_solution>')]
             self.correct_answer_te.clear()
             code = code.replace('```', '').strip()
-            # code = autopep8.fix_code(code)
             try:
                 code = black.format_str(code, mode=black.Mode(
                     target_versions={black.TargetVersion.PY310},
@@ -130,6 +115,7 @@ class MyWidget(QMainWindow):
             self.incorrect_answer_tv.resizeColumnToContents(0)
 
     def correct_row_generator(self):
+        self.pep8_correct()
         if self.correct_answer_tw.currentIndex() == 1:
             self.correct_code_model.clear()
             for row in self.correct_code.split('\n'):
@@ -141,6 +127,22 @@ class MyWidget(QMainWindow):
 
     def copy_my_answer(self):
         pyperclip.copy(self.my_answer_te.toPlainText())
+
+    def pep8_correct(self):
+        code = self.correct_answer_te.toPlainText()
+        try:
+            code = black.format_str(code, mode=black.Mode(
+                    target_versions={black.TargetVersion.PY310},
+                    line_length=101,
+                    string_normalization=False,
+                    is_pyi=False,
+                ), )
+        except Exception as err:
+            code = code.strip()
+        self.correct_answer_te.setPlainText(code)
+        self.correct_code = code
+
+
 
 
 
