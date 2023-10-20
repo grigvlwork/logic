@@ -67,6 +67,7 @@ class MyWidget(QMainWindow):
 
     def insert(self):
         self.teacher_answer_te.setPlainText(pyperclip.paste())
+        self.processing()
 
     def run_incorrect(self):
         code = self.incorrect_answer_te.toPlainText()
