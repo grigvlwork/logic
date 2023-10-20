@@ -10,20 +10,34 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 
 
-def run_text(text):
+def run_text(text, timeout):
     with open('code.py', 'w') as c:
         c.write(text)
-    completed_process = subprocess.run(['python', 'code.py'], capture_output=True, text=True)
-    if completed_process.returncode == 0:
-        if len(completed_process.stdout) > 25:
-            return completed_process.stdout[:25] + '..'
+    try:
+        completed_process = subprocess.run(['python', 'code.py'], capture_output=True, text=True, timeout=timeout)
+        if completed_process.returncode == 0:
+            if len(completed_process.stdout) > 25:
+                return completed_process.stdout[:25] + '..'
+            else:
+                return completed_process.stdout
         else:
-            return completed_process.stdout
-    else:
-        if len(completed_process.stderr) > 50:
-            return completed_process.stderr[:50] + '\n' + completed_process.stderr[50:]
-        else:
-            return completed_process.stderr
+            if len(completed_process.stderr) > 50:
+                return completed_process.stderr[:50] + '\n' + completed_process.stderr[50:]
+            else:
+                return completed_process.stderr
+    except subprocess.TimeoutExpired:
+        return f'Программа выполнялась более {timeout} секунд'
+    # completed_process = subprocess.run(['python', 'code.py'], capture_output=True, text=True)
+    # if completed_process.returncode == 0:
+    #     if len(completed_process.stdout) > 25:
+    #         return completed_process.stdout[:25] + '..'
+    #     else:
+    #         return completed_process.stdout
+    # else:
+    #     if len(completed_process.stderr) > 50:
+    #         return completed_process.stderr[:50] + '\n' + completed_process.stderr[50:]
+    #     else:
+    #         return completed_process.stderr
 
 
 def remove_comments(code):
@@ -56,11 +70,13 @@ class MyWidget(QMainWindow):
 
     def run_incorrect(self):
         code = self.incorrect_answer_te.toPlainText()
-        self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(code)))
+        timeout = self.time_incorrect_sb.value()
+        self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(code), timeout))
 
     def run_correct(self):
         code = self.correct_answer_te.toPlainText()
-        self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
+        timeout = self.time_correct_sb.value()
+        self.correct_result.setText('Вывод: ' + run_text(remove_comments(code), timeout))
 
     def create_my_answer(self):
         text = '<incorrect_solution>\n\n```\n' + self.incorrect_answer_te.toPlainText() + '\n```\n</incorrect_solution>\n\n' + \
@@ -79,7 +95,8 @@ class MyWidget(QMainWindow):
             self.incorrect_answer_te.clear()
             code = code.replace('```', '').strip()
             self.incorrect_answer_te.appendPlainText(code)
-            self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(self.incorrect_code)))
+            timeout = self.time_incorrect_sb.value()
+            self.incorrect_result.setText('Вывод: ' + run_text(remove_comments(self.incorrect_code), timeout))
         if all(x in t for x in ['<explanation>', '</explanation>']):
             code = t[t.find('<explanation>') + 13:t.find('</explanation>')]
             self.explanation_te.clear()
@@ -99,7 +116,8 @@ class MyWidget(QMainWindow):
             except Exception as err:
                 code = code.strip()
             self.correct_answer_te.appendPlainText(code)
-            self.correct_result.setText('Вывод: ' + run_text(remove_comments(code)))
+            timeout = self.time_correct_sb.value()
+            self.correct_result.setText('Вывод: ' + run_text(remove_comments(code), timeout))
         if all(x in t for x in ['<comment>', '</comment>']):
             self.teacher_comment = t[t.find('<comment>') + 9:t.find('</comment>')].strip()
         self.create_my_answer()
