@@ -42,16 +42,16 @@
            </spacer>
           </item>
           <item>
-           <widget class="QPushButton" name="process_btn">
+           <widget class="QPushButton" name="insert_answer">
             <property name="text">
-             <string>Обработка</string>
+             <string>Вставить</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="clear_answer">
+           <widget class="QPushButton" name="process_btn">
             <property name="text">
-             <string>Очистить</string>
+             <string>Обработка</string>
             </property>
            </widget>
           </item>

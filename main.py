@@ -53,7 +53,7 @@ class MyWidget(QMainWindow):
         self.correct_answer_te.textChanged.connect(self.create_my_answer)
         self.run_incorrect_btn.clicked.connect(self.run_incorrect)
         self.run_correct_btn.clicked.connect(self.run_correct)
-        self.clear_answer.clicked.connect(self.clear)
+        self.insert_answer.clicked.connect(self.insert)
         self.process_btn.clicked.connect(self.processing)
         self.incorrect_answer_tw.currentChanged.connect(self.incorrect_row_generator)
         self.correct_answer_tw.currentChanged.connect(self.correct_row_generator)
@@ -65,8 +65,8 @@ class MyWidget(QMainWindow):
         self.incorrect_code_model = QStandardItemModel()
         self.teacher_comment = ''
 
-    def clear(self):
-        self.teacher_answer_te.clear()
+    def insert(self):
+        self.teacher_answer_te.setPlainText(pyperclip.paste())
 
     def run_incorrect(self):
         code = self.incorrect_answer_te.toPlainText()
