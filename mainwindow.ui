@@ -14,7 +14,7 @@
    <string>Логика</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_4">
+   <layout class="QHBoxLayout" name="horizontalLayout_9">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_7">
       <item>
@@ -106,7 +106,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_6">
+     <layout class="QVBoxLayout" name="verticalLayout_4">
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_3">
         <item>
@@ -214,7 +214,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_4">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <widget class="QLabel" name="label_4">
           <property name="text">
@@ -223,16 +223,36 @@
          </widget>
         </item>
         <item>
-         <widget class="QPlainTextEdit" name="explanation_te">
-          <property name="font">
-           <font>
-            <family>Consolas</family>
-            <pointsize>10</pointsize>
-           </font>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="triple_ticking_btn">
+          <property name="text">
+           <string>```</string>
           </property>
          </widget>
         </item>
        </layout>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="explanation_te">
+        <property name="font">
+         <font>
+          <family>Consolas</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>

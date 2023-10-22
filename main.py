@@ -48,6 +48,7 @@ class MyWidget(QMainWindow):
         self.correct_answer_tw.currentChanged.connect(self.correct_row_generator)
         self.copy_my_answer_btn.clicked.connect(self.copy_my_answer)
         self.pep8_btn.clicked.connect(self.pep8_correct)
+        self.triple_ticking_btn.clicked.connect(self.triple_ticking)
         self.correct_code = ''
         self.incorrect_code = ''
         self.correct_code_model = QStandardItemModel()
@@ -149,6 +150,16 @@ class MyWidget(QMainWindow):
             code = code.strip()
         self.correct_answer_te.setPlainText(code)
         self.correct_code = code
+
+    def triple_ticking(self):
+        t = self.explanation_te.toPlainText()
+        text = t.split('```')[1]
+        t = t.replace('```' + text + '```', '\n```\n' + text + '\n```')
+        if t[-1] == '.':
+            t = t[:-1]
+        self.explanation_te.clear()
+        self.explanation_te.appendPlainText(t)
+        pass
 
 
 if __name__ == '__main__':
