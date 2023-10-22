@@ -27,17 +27,6 @@ def run_text(text, timeout):
                 return completed_process.stderr
     except subprocess.TimeoutExpired:
         return f'Программа выполнялась более {timeout} секунд'
-    # completed_process = subprocess.run(['python', 'code.py'], capture_output=True, text=True)
-    # if completed_process.returncode == 0:
-    #     if len(completed_process.stdout) > 25:
-    #         return completed_process.stdout[:25] + '..'
-    #     else:
-    #         return completed_process.stdout
-    # else:
-    #     if len(completed_process.stderr) > 50:
-    #         return completed_process.stderr[:50] + '\n' + completed_process.stderr[50:]
-    #     else:
-    #         return completed_process.stderr
 
 
 def remove_comments(code):
@@ -151,18 +140,15 @@ class MyWidget(QMainWindow):
         code = self.correct_answer_te.toPlainText()
         try:
             code = black.format_str(code, mode=black.Mode(
-                    target_versions={black.TargetVersion.PY310},
-                    line_length=101,
-                    string_normalization=False,
-                    is_pyi=False,
-                ), )
+                target_versions={black.TargetVersion.PY310},
+                line_length=101,
+                string_normalization=False,
+                is_pyi=False,
+            ), )
         except Exception as err:
             code = code.strip()
         self.correct_answer_te.setPlainText(code)
         self.correct_code = code
-
-
-
 
 
 if __name__ == '__main__':
@@ -172,7 +158,6 @@ if __name__ == '__main__':
 
     def excepthook(exc_type, exc_value, exc_tb):
         tb = "".join(traceback.format_exception(exc_type, exc_value, exc_tb))
-        # tb += '\n'.join(ex.current_rec.get_row())
         print(tb)
 
         msg = QMessageBox.critical(
