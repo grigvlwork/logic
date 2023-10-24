@@ -82,7 +82,7 @@
 
    ![screen12](images/p11.png)
 
-Открываем папку
+Открываем папку 
 
    ![screen13](images/p12.png)
 
