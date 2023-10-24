@@ -68,6 +68,8 @@
 
 ### 4. Как установить в VS Code
 
+**[Скринкаст](https://disk.yandex.ru/i/w5uRy3C1_K2nQg)** 
+
 Копируем ссылку, открываем VS Code, нажимаем Clone Git Repository
 
    ![screen11](images/p9.png)
