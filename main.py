@@ -8,6 +8,7 @@ import re
 from PyQt5 import uic  # Импортируем uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
+from mainwindow import Ui_MainWindow
 
 
 def run_text(text, timeout):
@@ -33,10 +34,11 @@ def remove_comments(code):
     return re.sub(r'#.*', '', code)
 
 
-class MyWidget(QMainWindow):
+class MyWidget(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('mainwindow.ui', self)
+        # uic.loadUi('mainwindow.ui', self)
+        self.setupUi(self)
         self.incorrect_answer_te.textChanged.connect(self.create_my_answer)
         self.explanation_te.textChanged.connect(self.create_my_answer)
         self.correct_answer_te.textChanged.connect(self.create_my_answer)
