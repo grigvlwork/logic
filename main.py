@@ -5,6 +5,8 @@ import pyperclip
 import black
 import sys
 import re
+import enchant
+import difflib
 from PyQt5 import uic  # Импортируем uic
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
@@ -32,6 +34,30 @@ def run_text(text, timeout):
 
 def remove_comments(code):
     return re.sub(r'#.*', '', code)
+
+
+def spell_check(text):
+    rus_alph = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'
+    words = []
+    word = ''
+    for c in text:
+        if c.lower() in rus_alph:
+            word += c
+        else:
+            if len(word) > 0:
+                words.append(word)
+                word = ''
+    result = []
+    dictionary = enchant.Dict("ru_RU")
+    for w in words:
+        if not dictionary.check(w):
+            sim = dict()
+            suggestions = set(dictionary.suggest(w))
+            for word in suggestions:
+                measure = difflib.SequenceMatcher(None, w, word).ratio()
+                sim[measure] = word
+            result.append([w, sim[max(sim.keys())]])
+    return result
 
 
 class MyWidget(QMainWindow, Ui_MainWindow):
@@ -137,7 +163,15 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             self.correct_answer_tv.resizeColumnToContents(0)
 
     def copy_my_answer(self):
-        pyperclip.copy(self.my_answer_te.toPlainText())
+        errors = spell_check(self.my_answer_te.toPlainText())
+        if len(errors) > 0:
+            str = 'Обнаружены ошибки в тексте, всё равно скопировать?\n'
+            for err in errors:
+                str += err[0] + ':    ' + err[1] + '\n'
+            message = QMessageBox.question(self, "Орфографические ошибки", str,
+                                           QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+            if message == QMessageBox.Yes:
+                pyperclip.copy(self.my_answer_te.toPlainText())
 
     def pep8_correct(self):
         code = self.correct_answer_te.toPlainText()
