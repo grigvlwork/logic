@@ -165,10 +165,10 @@ class MyWidget(QMainWindow, Ui_MainWindow):
     def copy_my_answer(self):
         errors = spell_check(self.my_answer_te.toPlainText())
         if len(errors) > 0:
-            str = 'Обнаружены ошибки в тексте, всё равно скопировать?\n'
+            s = 'Обнаружены ошибки в тексте, всё равно скопировать?\n'
             for err in errors:
-                str += err[0] + ':    ' + err[1] + '\n'
-            message = QMessageBox.question(self, "Орфографические ошибки", str,
+                s += err[0] + ':    ' + err[1] + '\n'
+            message = QMessageBox.question(self, "Орфографические ошибки", s,
                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if message == QMessageBox.Yes:
                 pyperclip.copy(self.my_answer_te.toPlainText())
