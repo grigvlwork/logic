@@ -199,11 +199,14 @@ class MyWidget(QMainWindow, Ui_MainWindow):
 
     def make_diff(self):
         if self.main_tw.currentIndex() == 1:
-            diff_html = difflib.HtmlDiff()
-            html_table = diff_html.make_table(self.incorrect_answer_te.toPlainText(),
-                                              self.correct_answer_te.toPlainText())
+            self.incorrect_to_compare_te.clear()
+            self.incorrect_to_compare_te.appendPlainText(self.incorrect_answer_te.toPlainText())
+            self.correct_to_compare_te.clear()
+            self.correct_to_compare_te.appendPlainText(self.correct_answer_te.toPlainText())
+            diff = difflib.ndiff(self.incorrect_answer_te.toPlainText().splitlines(keepends=True),
+                                 self.correct_answer_te.toPlainText().splitlines(keepends=True))
             self.difference_te.clear()
-            self.difference_te.appendHtml(html_table)
+            self.difference_te.appendPlainText(''.join(diff))
 
 
 if __name__ == '__main__':

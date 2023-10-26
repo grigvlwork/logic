@@ -14,7 +14,7 @@
    <string>Логика</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_10">
+   <layout class="QHBoxLayout" name="horizontalLayout_10">
     <item>
      <widget class="QTabWidget" name="main_tw">
       <property name="currentIndex">
@@ -116,11 +116,8 @@
          </layout>
         </item>
         <item>
-         <widget class="QSplitter" name="splitter">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
-          </property>
-          <widget class="QWidget" name="">
+         <layout class="QVBoxLayout" name="verticalLayout_10">
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -225,8 +222,8 @@
              </widget>
             </item>
            </layout>
-          </widget>
-          <widget class="QWidget" name="">
+          </item>
+          <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -270,8 +267,8 @@
              </widget>
             </item>
            </layout>
-          </widget>
-         </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -392,21 +389,7 @@
        <attribute name="title">
         <string>Сравнение</string>
        </attribute>
-       <layout class="QHBoxLayout" name="horizontalLayout_10">
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_7">
-            <property name="text">
-             <string>Неверное решение</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPlainTextEdit" name="correct_to_compare_te"/>
-          </item>
-         </layout>
-        </item>
+       <layout class="QHBoxLayout" name="horizontalLayout_11">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_8">
           <item>
@@ -417,7 +400,35 @@
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="incorrect_to_compare_te"/>
+           <widget class="QPlainTextEdit" name="incorrect_to_compare_te">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Неверное решение</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPlainTextEdit" name="correct_to_compare_te">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
@@ -431,7 +442,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QPlainTextEdit" name="difference_te"/>
+           <widget class="QPlainTextEdit" name="difference_te">
+            <property name="font">
+             <font>
+              <family>Consolas</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
