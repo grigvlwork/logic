@@ -74,6 +74,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.process_btn.clicked.connect(self.processing)
         self.incorrect_answer_tw.currentChanged.connect(self.incorrect_row_generator)
         self.correct_answer_tw.currentChanged.connect(self.correct_row_generator)
+        self.main_tw.currentChanged.connect(self.make_diff)
         self.copy_my_answer_btn.clicked.connect(self.copy_my_answer)
         self.pep8_btn.clicked.connect(self.pep8_correct)
         self.triple_ticking_btn.clicked.connect(self.triple_ticking)
@@ -195,7 +196,14 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             t = t[:-1]
         self.explanation_te.clear()
         self.explanation_te.appendPlainText(t)
-        pass
+
+    def make_diff(self):
+        if self.main_tw.currentIndex() == 1:
+            diff_html = difflib.HtmlDiff()
+            html_table = diff_html.make_table(self.incorrect_answer_te.toPlainText(),
+                                              self.correct_answer_te.toPlainText())
+            self.difference_te.clear()
+            self.difference_te.appendHtml(html_table)
 
 
 if __name__ == '__main__':
