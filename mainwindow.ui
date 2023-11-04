@@ -395,7 +395,7 @@
           <item>
            <widget class="QLabel" name="label_8">
             <property name="text">
-             <string>Верное решение</string>
+             <string>Неверное решение</string>
             </property>
            </widget>
           </item>
@@ -416,7 +416,7 @@
           <item>
            <widget class="QLabel" name="label_7">
             <property name="text">
-             <string>Неверное решение</string>
+             <string>Верное решение</string>
             </property>
            </widget>
           </item>

@@ -173,6 +173,8 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                                            QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if message == QMessageBox.Yes:
                 pyperclip.copy(self.my_answer_te.toPlainText())
+        else:
+            pyperclip.copy(self.my_answer_te.toPlainText())
 
     def pep8_correct(self):
         code = self.correct_answer_te.toPlainText()
