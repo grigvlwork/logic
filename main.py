@@ -163,7 +163,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             self.correct_answer_tv.resizeColumnToContents(0)
 
     def copy_my_answer(self):
-        errors = spell_check(self.my_answer_te.toPlainText())
+        errors = spell_check(self.explanation_te.toPlainText())
         if len(errors) > 0:
             s = 'Обнаружены ошибки в тексте, всё равно скопировать?\n'
             for err in errors:
