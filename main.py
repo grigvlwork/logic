@@ -192,12 +192,13 @@ class MyWidget(QMainWindow, Ui_MainWindow):
 
     def triple_ticking(self):
         t = self.explanation_te.toPlainText()
-        text = t.split('```')[1]
-        t = t.replace('```' + text + '```', '\n```\n' + text + '\n```')
-        if t[-1] == '.':
-            t = t[:-1]
-        self.explanation_te.clear()
-        self.explanation_te.appendPlainText(t)
+        if t.count('```') == 2:
+            text = t.split('```')[1]
+            t = t.replace('```' + text + '```', '\n```\n' + text + '\n```')
+            if t[-1] == '.':
+                t = t[:-1]
+            self.explanation_te.clear()
+            self.explanation_te.appendPlainText(t)
 
     def make_diff(self):
         if self.main_tw.currentIndex() == 1:
