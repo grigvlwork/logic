@@ -7,7 +7,9 @@ import sys
 import re
 import enchant
 import difflib
-from PyQt5 import uic  # Импортируем uic
+import datetime
+import time
+from PyQt5 import uic, QtCore
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtGui import QStandardItem, QStandardItemModel
 from mainwindow import Ui_MainWindow
@@ -83,8 +85,14 @@ class MyWidget(QMainWindow, Ui_MainWindow):
         self.correct_code_model = QStandardItemModel()
         self.incorrect_code_model = QStandardItemModel()
         self.teacher_comment = ''
+        self.working_clock = QtCore.QTimer()
+        self.working_clock.setInterval(1000)
+        self.working_clock.timeout.connect(self.display_clock)
+        self.curr_time = 0
 
     def insert(self):
+        self.curr_time = 0
+        self.working_clock.start()
         self.teacher_answer_te.setPlainText(pyperclip.paste())
         self.processing()
 
@@ -164,6 +172,7 @@ class MyWidget(QMainWindow, Ui_MainWindow):
             self.correct_answer_tv.resizeColumnToContents(0)
 
     def copy_my_answer(self):
+        # self.working_clock.stop()
         errors = spell_check(self.explanation_te.toPlainText())
         if len(errors) > 0:
             s = 'Обнаружены ошибки в тексте, всё равно скопировать?\n'
@@ -210,6 +219,10 @@ class MyWidget(QMainWindow, Ui_MainWindow):
                                  self.correct_answer_te.toPlainText().splitlines(keepends=True))
             self.difference_te.clear()
             self.difference_te.appendPlainText(''.join(diff))
+
+    def display_clock(self):
+        self.curr_time += 1
+        self.clock_lb.setText(time.strftime(' Прошло времени %M:%S', time.gmtime(self.curr_time)))
 
 
 if __name__ == '__main__':
